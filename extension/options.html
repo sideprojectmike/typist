@@ -47,6 +47,14 @@
         <select id="mode"><option value="insert">Insert at the caret</option><option value="replace">Replace the field's text</option></select>
       </label>
       <label class="row">
+        <span>Pause before typing <small>seconds before each request starts, 0 = off</small></span>
+        <input type="number" id="pause_before_typing" min="0" max="60" step="0.5">
+      </label>
+      <label class="row">
+        <span>Pause variation <small>± seconds, random each request</small></span>
+        <input type="number" id="pause_before_typing_jitter" min="0" max="60" step="0.5">
+      </label>
+      <label class="row">
         <span>Newlines</span>
         <select id="newline"><option value="enter">Enter</option><option value="shift_enter">Shift+Enter (chat boxes that send on Enter)</option></select>
       </label>

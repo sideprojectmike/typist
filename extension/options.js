@@ -15,6 +15,8 @@ function show(s) {
   $('pause_max').value = s.correction_pause.max;
   $('mode').value = s.mode;
   $('newline').value = s.newline;
+  $('pause_before_typing').value = s.pause_before_typing;
+  $('pause_before_typing_jitter').value = s.pause_before_typing_jitter;
   syncEnabled();
 }
 
@@ -27,6 +29,8 @@ const read = () => ({
   correction_pause: { min: num('pause_min'), max: num('pause_max') },
   mode: $('mode').value,
   newline: $('newline').value,
+  pause_before_typing: num('pause_before_typing'),
+  pause_before_typing_jitter: num('pause_before_typing_jitter'),
 });
 
 function syncEnabled() {

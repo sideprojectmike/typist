@@ -16,6 +16,7 @@ Claude ──MCP──▶ mcp-server (Node) ──WebSocket 127.0.0.1──▶ C
 You need Node 22+ (`brew install node`) and Chrome.
 
 ```sh
+git clone https://github.com/sideprojectmike/typist.git ~/typist
 cd ~/typist
 npm install
 npm run token            # prints the port and token, creating ~/.typist/config.json on first run
@@ -56,14 +57,14 @@ or similar is rejected; those are extension settings.
 
 ```json
 { "ok": true, "verified": true, "final_text": "Hello, how are you?", "target": "f3",
-  "mistakes": 1, "repairs": 0, "duration_ms": 4210, "effective_wpm": 54.2, "seed": 3516897361 }
+  "mistakes": 1, "repairs": 0, "paused_ms": 0, "duration_ms": 4210, "effective_wpm": 54.2, "seed": 3516897361 }
 ```
 
 ```json
 { "ok": false, "verified": false, "error": "typed keys did not change the field's text. …", "final_text": "" }
 ```
 
-`final_text` is the whole field as read back. `seed` reproduces the exact
+`final_text` is the whole field as read back. `paused_ms` is the pause before typing (not included in `duration_ms`). `seed` reproduces the exact
 plan: `createTypingPlan(text, settings, seed)`.
 
 ### Settings (extension options page)
@@ -78,6 +79,8 @@ plan: `createTypingPlan(text, settings, seed)`.
 | Pause before correcting | 150–500 ms | |
 | Mode | insert | `insert` at the caret, or `replace` the field's text |
 | Newlines | Enter | Use Shift+Enter for chat boxes that send on Enter |
+| Pause before typing | 0 s (off) | Wait before the first key of every `type_text` request, e.g. between questions on a form |
+| Pause variation | 0 s | ± random spread on that pause, picked fresh each request (5 s ± 2 s → 3–7 s) |
 
 WPM is the typing pace, not a deadline. Mistakes, corrections and the
 occasional pause before a word add real time, so `effective_wpm` comes out a

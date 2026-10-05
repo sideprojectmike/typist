@@ -17,7 +17,7 @@ test('undefined overrides are ignored', () => {
 });
 
 test('Claude cannot set typing behaviour per request', () => {
-  for (const key of ['mistake_rate', 'mistakes_enabled', 'variation', 'detection_delay', 'correction_pause']) {
+  for (const key of ['mistake_rate', 'mistakes_enabled', 'variation', 'detection_delay', 'correction_pause', 'pause_before_typing', 'pause_before_typing_jitter']) {
     assert.throws(() => resolveSettings({}, { [key]: DEFAULTS[key] }), /configured in the extension/);
   }
 });
@@ -27,6 +27,7 @@ test('invalid values are rejected, not clamped', () => {
     { wpm: 5 }, { wpm: '60' }, { mistake_rate: 0.5 }, { variation: -1 },
     { detection_delay: { min: 3, max: 1 } }, { detection_delay: { min: 0.5, max: 2 } },
     { correction_pause: { min: 100 } }, { mode: 'paste' }, { newline: 'cr' }, { mistakes_enabled: 1 },
+    { pause_before_typing: -1 }, { pause_before_typing: 61 }, { pause_before_typing_jitter: '2' },
   ]) {
     assert.throws(() => resolveSettings(bad), RangeError, JSON.stringify(bad));
   }

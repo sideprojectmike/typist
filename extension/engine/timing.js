@@ -15,6 +15,14 @@ const HOLD_MS = 70; // typical key dwell time
 
 export const msPerChar = (wpm) => 12000 / wpm; // one word = 5 characters
 
+// Pause before a request starts typing: pause_before_typing ± jitter seconds,
+// picked uniformly, never below zero. `random` returns a number in [0, 1).
+export function pauseBeforeTypingMs(settings, random = Math.random) {
+  const base = settings.pause_before_typing ?? 0;
+  const jitter = settings.pause_before_typing_jitter ?? 0;
+  return Math.round(Math.max(0, base + (2 * random() - 1) * jitter) * 1000);
+}
+
 function contextFactor(prev, ch) {
   let f = 1;
   if (prev === undefined) return f;

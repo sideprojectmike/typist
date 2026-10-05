@@ -3,7 +3,7 @@
 // the result has ok: false.
 import { Debuggee } from './cdp.js';
 import { createTypingPlan, resolveSettings } from './engine/index.js';
-import { msPerChar } from './engine/timing.js';
+import { msPerChar, pauseBeforeTypingMs } from './engine/timing.js';
 import { inDoc, inFrame, readDoc, resolveTarget } from './fields.js';
 import { diagnose, expectedText, firstDifference, insertedAt, normalize } from './verify.js';
 
@@ -105,6 +105,11 @@ class TypingJob {
     const plan = createTypingPlan(this.text, this.settings);
     this.seed = plan.seed;
 
+    // Optional pause before typing (settings: "Pause before typing").
+    // Waits before the debugger attaches, and can be cancelled.
+    this.pausedMs = pauseBeforeTypingMs(this.settings);
+    if (this.pausedMs) await this.wait(this.pausedMs);
+
     this.dbg = await Debuggee.attach(tab.id);
     const started = performance.now();
     try {
@@ -125,6 +130,7 @@ class TypingJob {
       target: this.field.id,
       mistakes: plan.stats.mistakes,
       repairs: this.repairs,
+      paused_ms: this.pausedMs,
       duration_ms: duration,
       effective_wpm: duration ? Math.round((this.chars.length / 5) / (duration / 60000) * 10) / 10 : 0,
       seed: plan.seed,
@@ -149,6 +155,15 @@ class TypingJob {
       else clock = performance.now();
       if (op.type !== 'notice') await this.key(op, op.hold);
     }
+  }
+
+  async wait(ms) {
+    const until = performance.now() + ms;
+    for (let left = ms; left > 0; left = until - performance.now()) {
+      this.checkCancelled();
+      await sleep(Math.min(left, 250));
+    }
+    this.checkCancelled();
   }
 
   checkCancelled() {

@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { createTypingPlan } from '../extension/engine/index.js';
-import { msPerChar } from '../extension/engine/timing.js';
+import { msPerChar, pauseBeforeTypingMs } from '../extension/engine/timing.js';
 import { PROSE, settings } from './helpers.js';
 
 const LONG = PROSE.repeat(6);
@@ -75,4 +75,18 @@ test('plan reports its seed and stats, and is reproducible', () => {
   assert.equal(a.stats.mistakes, a.ops.filter((op) => op.type === 'notice').length);
   assert.deepEqual(createTypingPlan(PROSE, settings({ mistake_rate: 0.1 }), 77), a);
   assert.equal(createTypingPlan('', settings(), 1).duration_ms, 0);
+});
+
+test('pause before typing: off by default, base ± jitter, never negative', () => {
+  assert.equal(pauseBeforeTypingMs({}), 0);
+  assert.equal(pauseBeforeTypingMs({ pause_before_typing: 0, pause_before_typing_jitter: 0 }), 0);
+  const s = { pause_before_typing: 5, pause_before_typing_jitter: 2 };
+  assert.equal(pauseBeforeTypingMs(s, () => 0), 3000);
+  assert.equal(pauseBeforeTypingMs(s, () => 0.5), 5000);
+  assert.equal(pauseBeforeTypingMs(s, () => 0.999999), 7000);
+  for (let i = 0; i < 200; i++) {
+    const ms = pauseBeforeTypingMs(s);
+    assert.ok(ms >= 3000 && ms <= 7000, String(ms));
+  }
+  assert.equal(pauseBeforeTypingMs({ pause_before_typing: 1, pause_before_typing_jitter: 3 }, () => 0), 0);
 });

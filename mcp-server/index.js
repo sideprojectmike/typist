@@ -63,7 +63,8 @@ server.registerTool('type_text', {
     + 'You choose what to type and where. The Typist extension decides how: typing rhythm, temporary typos and their corrections all come from the user\'s extension settings. '
     + 'When typing ends, the extension reads the field back. `ok: true` means the field\'s text was verified to be exactly right. '
     + 'If `ok` is false, the field may contain partial text; report the error to the user rather than retrying blindly. '
-    + 'Typing takes real time (about 12000/wpm ms per character), so long text takes a while.',
+    + 'Typing takes real time (about 12000/wpm ms per character), so long text takes a while. '
+    + 'If the user set a "pause before typing" in the extension, each call also waits that long before the first key.',
   inputSchema: z.object({
     text: z.string().describe('Exactly the text that should be entered.'),
     target: z.string().optional().describe('A field id from list_fields (e.g. "f3", or "f2@57" inside an iframe) or a CSS selector. Omit to type into the field that currently has focus.'),

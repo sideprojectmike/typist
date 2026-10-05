@@ -9,6 +9,8 @@ export const DEFAULTS = Object.freeze({
   correction_pause: Object.freeze({ min: 150, max: 500 }), // ms
   mode: 'insert', // 'insert' at caret | 'replace' field contents
   newline: 'enter', // 'enter' | 'shift_enter'
+  pause_before_typing: 0, // seconds to wait before the first key of each request (0 = off)
+  pause_before_typing_jitter: 0, // ± seconds, picked at random each request
 });
 
 export const OVERRIDABLE = ['wpm', 'mode', 'newline'];
@@ -27,6 +29,8 @@ const RULES = {
   correction_pause: [(v) => isRange(v, 0, 5000, false), '{min, max} ms from 0 to 5000, min <= max'],
   mode: [(v) => v === 'insert' || v === 'replace', '"insert" or "replace"'],
   newline: [(v) => v === 'enter' || v === 'shift_enter', '"enter" or "shift_enter"'],
+  pause_before_typing: [(v) => isNum(v, 0, 60), 'a number of seconds from 0 to 60'],
+  pause_before_typing_jitter: [(v) => isNum(v, 0, 60), 'a number of seconds from 0 to 60'],
 };
 
 export function validateSettings(settings) {
