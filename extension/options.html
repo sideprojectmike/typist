@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Typist settings</title>
+<link rel="stylesheet" href="options.css">
+</head>
+<body>
+<main>
+  <h1>Typist</h1>
+  <p class="lede">How the extension types. Claude chooses what to type and where; it can override speed for one request, but not the rest.</p>
+
+  <form id="settings" novalidate>
+    <section>
+      <h2>Speed</h2>
+      <label class="row">
+        <span>Words per minute</span>
+        <span class="pair"><input type="range" id="wpm-range" min="10" max="200" step="1"><input type="number" id="wpm" min="10" max="200" step="1"></span>
+      </label>
+      <label class="row">
+        <span>Variation <small>keystroke-to-keystroke unevenness, 0 = metronome</small></span>
+        <span class="pair"><input type="range" id="variation-range" min="0" max="1" step="0.05"><input type="number" id="variation" min="0" max="1" step="0.05"></span>
+      </label>
+    </section>
+
+    <section>
+      <h2>Mistakes</h2>
+      <label class="row check"><input type="checkbox" id="mistakes_enabled"> <span>Make and correct temporary mistakes</span></label>
+      <label class="row">
+        <span>Mistake rate <small>% of characters</small></span>
+        <input type="number" id="mistake_rate" min="0" max="20" step="0.5">
+      </label>
+      <div class="row">
+        <span>Noticed after <small>characters typed past the mistake</small></span>
+        <span class="range"><input type="number" id="detection_min" min="0" max="10" step="1" aria-label="Minimum"> to <input type="number" id="detection_max" min="0" max="10" step="1" aria-label="Maximum"></span>
+      </div>
+      <div class="row">
+        <span>Pause before correcting <small>ms</small></span>
+        <span class="range"><input type="number" id="pause_min" min="0" max="5000" step="10" aria-label="Minimum"> to <input type="number" id="pause_max" min="0" max="5000" step="10" aria-label="Maximum"></span>
+      </div>
+    </section>
+
+    <section>
+      <h2>Defaults for each request</h2>
+      <label class="row">
+        <span>Mode</span>
+        <select id="mode"><option value="insert">Insert at the caret</option><option value="replace">Replace the field's text</option></select>
+      </label>
+      <label class="row">
+        <span>Newlines</span>
+        <select id="newline"><option value="enter">Enter</option><option value="shift_enter">Shift+Enter (chat boxes that send on Enter)</option></select>
+      </label>
+    </section>
+
+    <div class="actions">
+      <button type="submit">Save</button>
+      <button type="button" id="reset" class="secondary">Reset to defaults</button>
+      <span id="message" role="status"></span>
+    </div>
+  </form>
+
+  <form id="connection" novalidate>
+    <section>
+      <h2>Connection</h2>
+      <p class="status"><span id="status-dot"></span><span id="status">…</span></p>
+      <label class="row">
+        <span>Port</span>
+        <input type="number" id="port" min="1024" max="65535">
+      </label>
+      <label class="row">
+        <span>Token <small>run <code>npm run token</code> in the typist folder</small></span>
+        <input type="password" id="token" autocomplete="off" spellcheck="false">
+      </label>
+    </section>
+    <div class="actions">
+      <button type="submit">Save and connect</button>
+      <span id="conn-message" role="status"></span>
+    </div>
+  </form>
+</main>
+<script type="module" src="options.js"></script>
+</body>
+</html>

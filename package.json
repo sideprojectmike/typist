@@ -1,0 +1,28 @@
+{
+  "name": "typist",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test 'test/*.test.js'",
+    "start": "node mcp-server/index.js",
+    "token": "node mcp-server/index.js --print-token",
+    "probe": "node scripts/probe-cdp.js",
+    "e2e": "node scripts/e2e.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.32.0",
+    "ws": "^8.22.0",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "quill": "^2.0.3",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "bin": {
+    "typist-mcp": "mcp-server/index.js"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

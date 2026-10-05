@@ -1,0 +1,39 @@
+:root {
+  --bg: #f7f7f5; --card: #fff; --text: #1d1d1b; --muted: #6b6b66; --line: #e3e2dd;
+  --accent: #2f5bd3; --ok: #1e8a4c; --bad: #c0392b; --warn: #b7791f;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #18181a; --card: #222225; --text: #ececea; --muted: #9a9a95; --line: #333337;
+    --accent: #7c9cff; --ok: #4cc27f; --bad: #ff7a6b; --warn: #e3b04b; color-scheme: dark; }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 14px/1.5 system-ui, -apple-system, sans-serif; }
+main { max-width: 620px; margin: 0 auto; padding: 40px 20px 60px; }
+h1 { font-size: 24px; margin: 0 0 4px; }
+.lede { color: var(--muted); margin: 0 0 24px; }
+section { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 6px 18px; margin-bottom: 16px; }
+h2 { font-size: 13px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); margin: 12px 0 4px; }
+.row { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 10px 0; border-top: 1px solid var(--line); flex-wrap: wrap; }
+h2 + .row, .status + .row { border-top: none; }
+.row > span:first-child { flex: 1 1 200px; }
+.row.check { justify-content: flex-start; gap: 10px; }
+small { display: block; color: var(--muted); font-size: 12px; }
+input[type=number], input[type=password], select {
+  font: inherit; color: inherit; background: var(--bg); border: 1px solid var(--line); border-radius: 6px; padding: 5px 8px;
+}
+input[type=number] { width: 84px; }
+input[type=password] { width: 260px; max-width: 100%; }
+.pair, .range { display: flex; align-items: center; gap: 10px; }
+.pair input[type=range] { width: 160px; accent-color: var(--accent); }
+input:invalid, input.invalid { border-color: var(--bad); }
+.actions { display: flex; align-items: center; gap: 10px; margin: 0 0 32px; flex-wrap: wrap; }
+button { font: inherit; border: 0; border-radius: 6px; padding: 7px 16px; background: var(--accent); color: #fff; cursor: pointer; }
+button.secondary { background: transparent; color: var(--text); border: 1px solid var(--line); }
+#message.error, #conn-message.error { color: var(--bad); }
+#message.ok, #conn-message.ok { color: var(--ok); }
+.status { display: flex; align-items: center; gap: 8px; margin: 6px 0 2px; }
+#status-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--warn); flex: none; }
+#status-dot.connected { background: var(--ok); }
+#status-dot.disconnected { background: var(--bad); }
+code { font-size: 12px; }

@@ -1,0 +1,6 @@
+<!doctype html>
+<meta charset="utf-8">
+<input id="xinput" aria-label="Cross-origin input">
+<script>
+  window.addEventListener('message', (e) => { if (e.data === 'value?') parent.postMessage({ xvalue: document.getElementById('xinput').value }, '*'); });
+</script>

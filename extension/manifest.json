@@ -1,0 +1,11 @@
+{
+  "manifest_version": 3,
+  "name": "Typist",
+  "version": "0.1.0",
+  "description": "Types text from Claude one key at a time, with human-like timing and mistakes, and verifies the result is exact.",
+  "permissions": ["debugger", "scripting", "storage", "tabs", "alarms"],
+  "host_permissions": ["<all_urls>"],
+  "background": { "service_worker": "sw.js", "type": "module" },
+  "options_ui": { "page": "options.html", "open_in_tab": true },
+  "action": { "default_title": "Typist settings" }
+}

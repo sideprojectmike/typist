@@ -1,0 +1,21 @@
+# dependencies
+node_modules/
+
+# macOS
+.DS_Store
+
+# local secrets / runtime config (Typist keeps its token in ~/.typist/config.json)
+.typist/
+config.json
+.env
+.env.*
+*.pem
+*.key
+
+# logs, build output, test browsers
+*.log
+npm-debug.log*
+*.crx
+*.zip
+chrome-for-testing/
+.cache/
