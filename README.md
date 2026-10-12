@@ -1,3 +1,7 @@
+## WARNING THIS TOOL IS NOT TO BE USED FOR ACADEMIC DISHONESTY
+
+
+
 # Typist
 
 Lets Claude type into Chrome one key at a time, like a person: natural rhythm,
